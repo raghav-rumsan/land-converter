@@ -1,5 +1,5 @@
-import "./styles.css";
 import { useState } from "react";
+import "./styles.css";
 
 const Converter = () => {
   const [state, setState] = useState({
@@ -40,287 +40,125 @@ const Converter = () => {
     });
   };
 
+  const sqmToRopaniSystem = () => {
+    dhur = +squareMeters / 16.93;
+    if (dhur >= 20) {
+      let tempDhurDec = dhur % 20;
+      let tempDhurWhole = dhur - tempDhurDec;
+      dhur = tempDhurDec;
+      kattha = tempDhurWhole / 20;
+      if (kattha >= 20) {
+        let tempKatthaDec = kattha % 20;
+        let tempKatthaWhole = kattha - tempKatthaDec;
+        kattha = tempKatthaDec;
+        bigah = tempKatthaWhole / 20;
+      }
+    } else {
+      bigah -= bigah;
+      kattha -= kattha;
+    }
+
+  }
+
+  const sqmToBigahSystem = () => {
+    let daamValue = squareMeters / 1.99;
+
+
+    daam = daamValue;
+    if (daam >= 4) {
+      let tempDaamDec = +daamValue % 4;
+      let tempDaamWhole = +daamValue - tempDaamDec;
+      daam = +tempDaamDec;
+      let tempPaisaValue = +tempDaamWhole / 4;
+      paisa = tempPaisaValue;
+      if (tempPaisaValue >= 4) {
+        let tempPaisaDec = +tempPaisaValue % 4;
+        let tempPaisaWhole = +tempPaisaValue - +tempPaisaDec;
+        paisa = +tempPaisaDec;
+        aana = +tempPaisaWhole / 4;
+        if (aana >= 16) {
+          let tempAanaDec = aana % 16;
+          let tempAanaWhole = aana - tempAanaDec;
+          aana = tempAanaDec;
+          ropani = tempAanaWhole / 16;
+        }
+
+      }
+    } else {
+      ropani -= ropani;
+      aana -= aana;
+      paisa -= paisa;
+    }
+  }
+
   const converter = (name, value) => {
     switch (name) {
       case "squareMeters":
         squareMeters = +value;
         squareFeet = +value * 10.76;
-        dhur = +value / 16.93
-        if (dhur >= 20) {
-          let tempDhurDec = dhur % 20
-          let tempDhurWhole = dhur - tempDhurDec
-          dhur = tempDhurDec
-          kattha = tempDhurWhole / 20
-          if (kattha >= 20) {
-            let tempKatthaDec = kattha % 20;
-            let tempKatthaWhole = kattha - tempKatthaDec;
-            kattha = tempKatthaDec;
-            bigah = tempKatthaWhole / 20;
-          }
-        } else {
-          bigah -= bigah
-          kattha -= kattha
-        }
-         let daamValueSqm = +value/1.99
-       
-        daam = daamValueSqm
-        if (daam >= 4) {
-          let tempDaamDec = +daamValueSqm % 4;
-          let tempDaamWhole = +daamValueSqm - tempDaamDec
-          daam = +tempDaamDec 
-          let tempPaisaValue =  +tempDaamWhole / 4;
-          paisa = tempPaisaValue
-          if (tempPaisaValue >= 4) {
-            let tempPaisaDec = +tempPaisaValue % 4;
-            let tempPaisaWhole = +tempPaisaValue - +tempPaisaDec;
-            paisa = +tempPaisaDec;
-            aana = +tempPaisaWhole / 4;
-            if (aana >= 16) {
-              
-              let tempAanaDec = aana % 16;
-              let tempAanaWhole = aana - tempAanaDec;
-              aana = tempAanaDec;
-              ropani = tempAanaWhole / 16;
-            }
-          } 
-                 
-        } else {
-          ropani -= ropani
-          aana -= aana
-          paisa -= paisa
-        }
+        sqmToRopaniSystem();
+        sqmToBigahSystem();
         break;
-      
-        case "ropani":
+
+      case "ropani":
         ropani = +value;
-       let totalRopani = (+value + +aana / 16 + +paisa / 64 + +daam / 256);
-        squareMeters =+totalRopani * 508.72;
+        let totalRopani = +value + +aana / 16 + +paisa / 64 + +daam / 256;
+        squareMeters = +totalRopani * 508.72;
         squareFeet = +squareMeters * 10.76;
-        dhur = +squareMeters / 16.93
-        if (dhur >= 20) {
-          let tempDhurDec = dhur % 20
-          let tempDhurWhole = dhur - tempDhurDec
-          dhur = tempDhurDec
-          kattha = tempDhurWhole / 20
-          if (kattha >= 20) {
-            let tempKatthaDec = kattha % 20;
-            let tempKatthaWhole = kattha - tempKatthaDec;
-            kattha = tempKatthaDec;
-            bigah = tempKatthaWhole / 20;
-          }
-        } else {
-          bigah -= bigah
-          kattha -= kattha
-        }
-        
+        sqmToRopaniSystem();
         break;
-      
+
       case "aana":
         aana = +value;
-        squareMeters = +(ropani *16+ +value + +paisa/4 + +daam/16)*31.80 ;
+        squareMeters = +(ropani * 16 + +value + +paisa / 4 + +daam / 16) * 31.8;
         squareFeet = squareMeters * 10.76;
-         dhur = +squareMeters / 16.93
-        if (dhur >= 20) {
-          let tempDhurDec = dhur % 20
-          let tempDhurWhole = dhur - tempDhurDec
-          dhur = tempDhurDec
-          kattha = tempDhurWhole / 20
-          if (kattha >= 20) {
-            let tempKatthaDec = kattha % 20;
-            let tempKatthaWhole = kattha - tempKatthaDec;
-            kattha = tempKatthaDec;
-            bigah = tempKatthaWhole / 20;
-          }
-        }
+        sqmToRopaniSystem();
         break;
       case "paisa":
         paisa = +value;
         squareMeters = +(ropani * 256 + +aana * 16 + +value + +daam / 4) * 7.95;
         squareFeet = squareMeters * 10.76;
-         dhur = +squareMeters / 16.93
-        if (dhur >= 20) {
-          let tempDhurDec = dhur % 20
-          let tempDhurWhole = dhur - tempDhurDec
-          dhur = tempDhurDec
-          kattha = tempDhurWhole / 20
-          if (kattha >= 20) {
-            let tempKatthaDec = kattha % 20;
-            let tempKatthaWhole = kattha - tempKatthaDec;
-            kattha = tempKatthaDec;
-            bigah = tempKatthaWhole / 20;
-          }
-        }
+        sqmToRopaniSystem();
         break;
-    
+
       case "daam":
         daam = +value;
-        squareMeters = +(ropani * 256 + +aana * 16 + +paisa * 4 + +value ) * 1.99;
+        squareMeters =
+          +(ropani * 256 + +aana * 16 + +paisa * 4 + +value) * 1.99;
         squareFeet = squareMeters * 10.76;
-         dhur = +squareMeters / 16.93
-        if (dhur >= 20) {
-          let tempDhurDec = dhur % 20
-          let tempDhurWhole = dhur - tempDhurDec
-          dhur = tempDhurDec
-          kattha = tempDhurWhole / 20
-          if (kattha >= 20) {
-            let tempKatthaDec = kattha % 20;
-            let tempKatthaWhole = kattha - tempKatthaDec;
-            kattha = tempKatthaDec;
-            bigah = tempKatthaWhole / 20;
-          }
-        }
+        sqmToRopaniSystem();
         break;
       case "bigah":
         bigah = +value;
-        squareMeters = (+value + +kattha / 20 + +dhur/400) * 6772.41;
+        squareMeters = (+value + +kattha / 20 + +dhur / (20 * 20)) * 6772.41;
         squareFeet = +squareMeters * 10.76;
-        // let daamValue = 1.99 * +squareMeters;
-        let daamValue = + (+value + +kattha / 20 + +dhur/400) * (13.31 * 4 * 4 * 16);
-       
-        daam = daamValue
-        if (daam >= 4) {
-          let tempDaamDec = +daamValue % 4;
-          let tempDaamWhole = +daamValue - tempDaamDec
-          daam = +tempDaamDec 
-          let tempPaisaValue =  +tempDaamWhole / 4;
-          paisa = tempPaisaValue
-          if (tempPaisaValue >= 4) {
-            let tempPaisaDec = +tempPaisaValue % 4;
-            let tempPaisaWhole = +tempPaisaValue - +tempPaisaDec;
-            paisa = +tempPaisaDec;
-            aana = +tempPaisaWhole / 4;
-            if (aana >= 16) {
-              
-              let tempAanaDec = aana % 16;
-              let tempAanaWhole = aana - tempAanaDec;
-              aana = tempAanaDec;
-              ropani = tempAanaWhole / 16;
-            }
-          } 
-                 
-        } else {
-          ropani -= ropani
-          aana -= aana
-          paisa -= paisa
-        }
+        sqmToBigahSystem();
+
         break;
       case "kattha":
-       
         kattha = +value;
-        squareMeters = (bigah*20 + +value + +dhur / 20) * 338.62;
-         squareFeet = squareMeters * 10.76;
-       let daamValueKattha   = (+bigah/20 + +value + +dhur * 20) * (13.31 * 4 * 4 );
-        daam = daamValueKattha
-        if (daam >= 4) {
-          let tempDaamDec = +daamValueKattha % 4;
-          let tempDaamWhole = +daamValueKattha - tempDaamDec
-          daam = +tempDaamDec 
-          let tempPaisaValue =  +tempDaamWhole / 4;
-          paisa = tempPaisaValue
-          if (tempPaisaValue >= 4) {
-            let tempPaisaDec = +tempPaisaValue % 4;
-            let tempPaisaWhole = +tempPaisaValue - +tempPaisaDec;
-            paisa = +tempPaisaDec;
-            aana = +tempPaisaWhole / 4;
-            if (aana >= 16) {
-              
-              let tempAanaDec = aana % 16;
-              let tempAanaWhole = aana - tempAanaDec;
-              aana = tempAanaDec;
-              ropani = tempAanaWhole / 16;
-            }
-          } 
-                 
-        } else {
-          ropani -= ropani
-          aana -= aana
-          paisa -= paisa
-        }
+        squareMeters = (bigah * 20 + +value + +dhur / 20) * 338.62;
+        squareFeet = squareMeters * 10.76;
+        sqmToBigahSystem();
+
         break;
       case "dhur":
-      dhur = +value;
-      squareMeters = (bigah*20 + +kattha*20 + +value) * 16.93;
+        dhur = +value;
+        squareMeters = (bigah * 20 + +kattha * 20 + +value) * 16.93;
         squareFeet = squareMeters * 10.76;
-         let daamValueDhur   = (bigah*20 + +kattha*20 + +value) * (13.31 * 4 );
-        daam = daamValueDhur
-        if (daam >= 4) {
-          let tempDaamDec = +daamValueDhur % 4;
-          let tempDaamWhole = +daamValueDhur - tempDaamDec
-          daam = +tempDaamDec 
-          let tempPaisaValue =  +tempDaamWhole / 4;
-          paisa = tempPaisaValue
-          if (tempPaisaValue >= 4) {
-            let tempPaisaDec = +tempPaisaValue % 4;
-            let tempPaisaWhole = +tempPaisaValue - +tempPaisaDec;
-            paisa = +tempPaisaDec;
-            aana = +tempPaisaWhole / 4;
-            if (aana >= 16) {
-              
-              let tempAanaDec = aana % 16;
-              let tempAanaWhole = aana - tempAanaDec;
-              aana = tempAanaDec;
-              ropani = tempAanaWhole / 16;
-            }
-          } 
-                 
-        } else {
-          ropani -= ropani
-          aana -= aana
-          paisa -= paisa
-        }
+        sqmToBigahSystem();
+
         break;
       case "squareFeet":
         squareFeet = +value;
         squareMeters = +value / 10.76;
-        dhur = +value / 182.25
-        if (dhur >= 20) {
-          let tempDhurDec = dhur % 20
-          let tempDhurWhole = dhur - tempDhurDec
-          dhur = tempDhurDec
-          kattha = tempDhurWhole / 20
-          if (kattha >= 20) {
-            let tempKatthaDec = kattha % 20;
-            let tempKatthaWhole = kattha - tempKatthaDec;
-            kattha = tempKatthaDec;
-            bigah = tempKatthaWhole / 20;
-          }
-        } else {
-          bigah -= bigah
-          kattha -= kattha
-        }
-         let daamValueSqft = +value/	21.39
-       
-        daam = daamValueSqft
-        if (daam >= 4) {
-          let tempDaamDec = +daamValueSqft % 4;
-          let tempDaamWhole = +daamValueSqft - tempDaamDec
-          daam = +tempDaamDec 
-          let tempPaisaValue =  +tempDaamWhole / 4;
-          paisa = tempPaisaValue
-          if (tempPaisaValue >= 4) {
-            let tempPaisaDec = +tempPaisaValue % 4;
-            let tempPaisaWhole = +tempPaisaValue - +tempPaisaDec;
-            paisa = +tempPaisaDec;
-            aana = +tempPaisaWhole / 4;
-            if (aana >= 16) {
-              
-              let tempAanaDec = aana % 16;
-              let tempAanaWhole = aana - tempAanaDec;
-              aana = tempAanaDec;
-              ropani = tempAanaWhole / 16;
-            }
-          } 
-                 
-        } else {
-          ropani -= ropani
-          aana -= aana
-          paisa -= paisa
-        }
+        sqmToRopaniSystem();
+        sqmToBigahSystem();
+
         break;
       default:
         return state;
     }
-
 
     setState({
       ropani,
@@ -452,7 +290,6 @@ const Converter = () => {
           />
         </label>
       </div>
-     
     </div>
   );
 };

@@ -1,13 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import Conv from "./Conv";
 import Converter from "./Converter";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
     <Converter />
-    {/* <Conv /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );
