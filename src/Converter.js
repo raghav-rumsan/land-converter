@@ -40,8 +40,15 @@ const Converter = () => {
     });
   };
 
-  const sqmToRopaniSystem = () => {
+  const sqmToBigah = () => {
+    // dhur = +squareFeet / 182.25;
     dhur = +squareMeters / 16.93;
+
+    // ropani = squareFeet / 5476;
+    // let tempAanaDec = (ropani % 5476) * 16;
+    // let tempAanaRec = ropani - tempAanaDec
+    // console.log('object', { tempAanaDec, tempAanaRem })
+
     if (dhur >= 20) {
       let tempDhurDec = dhur % 20;
       let tempDhurWhole = dhur - tempDhurDec;
@@ -53,16 +60,17 @@ const Converter = () => {
         kattha = tempKatthaDec;
         bigah = tempKatthaWhole / 20;
       }
-    } else {
+    }
+    else {
       bigah -= bigah;
       kattha -= kattha;
     }
 
   }
 
-  const sqmToBigahSystem = () => {
-    let daamValue = squareMeters / 1.99;
-
+  const sqmToRopani = () => {
+    let daamValue = squareFeet / 21.39;
+    // let daamValue = squareMeters / 1.99;
 
     daam = daamValue;
     if (daam >= 4) {
@@ -96,64 +104,84 @@ const Converter = () => {
       case "squareMeters":
         squareMeters = +value;
         squareFeet = +value * 10.76;
-        sqmToRopaniSystem();
-        sqmToBigahSystem();
+        sqmToBigah();
+        sqmToRopani();
         break;
 
       case "ropani":
         ropani = +value;
         let totalRopani = +value + +aana / 16 + +paisa / 64 + +daam / 256;
-        squareMeters = +totalRopani * 508.72;
-        squareFeet = +squareMeters * 10.76;
-        sqmToRopaniSystem();
+        squareMeters = +totalRopani * 508.73;
+        // squareFeet = +squareMeters * 10.76;
+        squareFeet = +totalRopani * 5476;
+
+        sqmToBigah();
         break;
 
       case "aana":
         aana = +value;
-        squareMeters = +(ropani * 16 + +value + +paisa / 4 + +daam / 16) * 31.8;
-        squareFeet = squareMeters * 10.76;
-        sqmToRopaniSystem();
+        let totalAana = +(ropani * 16 + +value + +paisa / 4 + +daam / 16)
+        squareMeters = totalAana * 31.796;
+        // squareFeet = squareMeters * 10.76;
+        squareFeet = totalAana * 342.25;
+
+        sqmToBigah();
         break;
       case "paisa":
         paisa = +value;
-        squareMeters = +(ropani * 256 + +aana * 16 + +value + +daam / 4) * 7.95;
-        squareFeet = squareMeters * 10.76;
-        sqmToRopaniSystem();
+        let totalPaisa = +(ropani / 64 + +aana / 16 + +value + +daam * 4);
+        squareMeters = totalPaisa * 7.95;
+        // squareFeet = squareMeters * 10.76;
+        squareFeet = totalPaisa * 85.5625;
+        console.log('squareFeet,squareMeters', squareFeet, squareMeters)
+
+        sqmToBigah();
         break;
 
       case "daam":
         daam = +value;
-        squareMeters =
-          +(ropani * 256 + +aana * 16 + +paisa * 4 + +value) * 1.99;
-        squareFeet = squareMeters * 10.76;
-        sqmToRopaniSystem();
+        let totalDaam = +(ropani * 256 + +aana * 16 + +paisa * 4 + +value)
+        squareMeters = totalDaam * 1.99;
+        // squareFeet = squareMeters * 10.76;
+        squareFeet = totalDaam * 21.39;
+
+        sqmToBigah();
         break;
       case "bigah":
         bigah = +value;
-        squareMeters = (+value + +kattha / 20 + +dhur / (20 * 20)) * 6772.41;
-        squareFeet = +squareMeters * 10.76;
-        sqmToBigahSystem();
+        let totalBigah = (+value + +kattha / 20 + +dhur / (20 * 20))
+        squareMeters = totalBigah * 6772.41;
+        squareFeet = +totalBigah * 72900;
+        // squareFeet = +squareMeters * 10.76;
+
+        sqmToRopani();
 
         break;
       case "kattha":
         kattha = +value;
-        squareMeters = (bigah * 20 + +value + +dhur / 20) * 338.62;
-        squareFeet = squareMeters * 10.76;
-        sqmToBigahSystem();
+        let totalKattha = (bigah / 20 + +value + +dhur * 20)
+        squareMeters = totalKattha * 338.62;
+        squareFeet = totalKattha * 3645;
+        // squareFeet = squareMeters * 10.76;
+
+        sqmToRopani();
 
         break;
       case "dhur":
         dhur = +value;
-        squareMeters = (bigah * 20 + +kattha * 20 + +value) * 16.93;
-        squareFeet = squareMeters * 10.76;
-        sqmToBigahSystem();
+        let totalDhur = (bigah / 400 + +kattha * 20 + +value)
+        squareMeters = totalDhur * 16.93;
+        squareFeet = totalDhur * 182.25;
+        // squareFeet = squareMeters * 10.76;
+
+        sqmToRopani();
 
         break;
       case "squareFeet":
         squareFeet = +value;
         squareMeters = +value / 10.76;
-        sqmToRopaniSystem();
-        sqmToBigahSystem();
+        sqmToBigah();
+        sqmToRopani();
 
         break;
       default:
