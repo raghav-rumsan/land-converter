@@ -60,13 +60,11 @@ const Converter = () => {
         kattha = tempKatthaDec;
         bigah = tempKatthaWhole / 20;
       }
-    }
-    else {
+    } else {
       bigah -= bigah;
       kattha -= kattha;
     }
-
-  }
+  };
 
   const sqmToRopani = () => {
     let daamValue = squareFeet / 21.39;
@@ -90,14 +88,13 @@ const Converter = () => {
           aana = tempAanaDec;
           ropani = tempAanaWhole / 16;
         }
-
       }
     } else {
       ropani -= ropani;
       aana -= aana;
       paisa -= paisa;
     }
-  }
+  };
 
   const converter = (name, value) => {
     switch (name) {
@@ -120,7 +117,7 @@ const Converter = () => {
 
       case "aana":
         aana = +value;
-        let totalAana = +(ropani * 16 + +value + +paisa / 4 + +daam / 16)
+        let totalAana = +(ropani * 16 + +value + +paisa / 4 + +daam / 16);
         squareMeters = totalAana * 31.796;
         // squareFeet = squareMeters * 10.76;
         squareFeet = totalAana * 342.25;
@@ -133,14 +130,14 @@ const Converter = () => {
         squareMeters = totalPaisa * 7.95;
         // squareFeet = squareMeters * 10.76;
         squareFeet = totalPaisa * 85.5625;
-        console.log('squareFeet,squareMeters', squareFeet, squareMeters)
+        console.log("squareFeet,squareMeters", squareFeet, squareMeters);
 
         sqmToBigah();
         break;
 
       case "daam":
         daam = +value;
-        let totalDaam = +(ropani * 256 + +aana * 16 + +paisa * 4 + +value)
+        let totalDaam = +(ropani * 256 + +aana * 16 + +paisa * 4 + +value);
         squareMeters = totalDaam * 1.99;
         // squareFeet = squareMeters * 10.76;
         squareFeet = totalDaam * 21.39;
@@ -149,7 +146,7 @@ const Converter = () => {
         break;
       case "bigah":
         bigah = +value;
-        let totalBigah = (+value + +kattha / 20 + +dhur / (20 * 20))
+        let totalBigah = +value + +kattha / 20 + +dhur / (20 * 20);
         squareMeters = totalBigah * 6772.41;
         squareFeet = +totalBigah * 72900;
         // squareFeet = +squareMeters * 10.76;
@@ -159,7 +156,7 @@ const Converter = () => {
         break;
       case "kattha":
         kattha = +value;
-        let totalKattha = (bigah / 20 + +value + +dhur * 20)
+        let totalKattha = bigah / 20 + +value + +dhur * 20;
         squareMeters = totalKattha * 338.62;
         squareFeet = totalKattha * 3645;
         // squareFeet = squareMeters * 10.76;
@@ -169,7 +166,7 @@ const Converter = () => {
         break;
       case "dhur":
         dhur = +value;
-        let totalDhur = (bigah / 400 + +kattha * 20 + +value)
+        let totalDhur = bigah / 400 + +kattha * 20 + +value;
         squareMeters = totalDhur * 16.93;
         squareFeet = totalDhur * 182.25;
         // squareFeet = squareMeters * 10.76;
@@ -207,20 +204,21 @@ const Converter = () => {
     converter(name, value);
   };
 
-  console.log("state", state);
-
   return (
     <div className="container">
-      <h1 style={{ textAlign: "center" }}> Land Converter</h1>
-      <h4 style={{ textAlign: "center" }}> all in one nepali land converter</h4>
+      <div className="header">
+        <h1 style={{ fontFamily: "Redressed" }}> Land Converter</h1>
+        <h4> all in one nepali land converter</h4>
+      </div>
       <div className="button-container">
         <button onClick={resetState}>Reset</button>
       </div>
       <div>
         <h4>Ropani System</h4>
-        <label>
+        <label for="inputField">
           Ropani
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={ropani}
@@ -228,9 +226,10 @@ const Converter = () => {
             onChange={(e) => onChange(e, "ropani")}
           />
         </label>
-        <label>
+        <label for="inputField">
           Aana
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={aana}
@@ -238,9 +237,10 @@ const Converter = () => {
             onChange={(e) => onChange(e, "aana")}
           />
         </label>
-        <label>
+        <label for="inputField">
           Paisa
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={paisa}
@@ -248,9 +248,10 @@ const Converter = () => {
             onChange={(e) => onChange(e, "paisa")}
           />
         </label>
-        <label>
+        <label for="inputField">
           Daam
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={daam}
@@ -261,9 +262,10 @@ const Converter = () => {
       </div>
       <div>
         <h4>Bigah System</h4>
-        <label>
+        <label for="inputField">
           Bigah
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={bigah}
@@ -271,9 +273,10 @@ const Converter = () => {
             onChange={(e) => onChange(e, "bigah")}
           />
         </label>
-        <label>
+        <label for="inputField">
           Kattha
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={kattha}
@@ -281,9 +284,10 @@ const Converter = () => {
             onChange={(e) => onChange(e, "kattha")}
           />
         </label>
-        <label>
+        <label for="inputField">
           Dhur
           <input
+            id="inputField"
             className="unit-input"
             placeholder="0"
             value={dhur}
@@ -294,9 +298,10 @@ const Converter = () => {
       </div>
       <div>
         <h4>Square Meters</h4>
-        <label>
+        <label for="inputField">
           Square Meters
           <input
+            id="inputField"
             value={squareMeters}
             className="unit-input"
             onChange={(e) => onChange(e, "squareMeters")}
@@ -307,9 +312,10 @@ const Converter = () => {
       </div>
       <div>
         <h4>Square Feet</h4>
-        <label>
+        <label for="inputField">
           Square Feet
           <input
+            id="inputField"
             value={squareFeet}
             className="unit-input"
             onChange={(e) => onChange(e, "squareFeet")}
